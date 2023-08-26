@@ -7,14 +7,15 @@ import com.example.wallpaperapp.models.PhotoResponse
 import com.example.wallpaperapp.paging.WallpaperPagingSource
 import com.example.wallpaperapp.retrofit.WallpaperApi
 import kotlinx.coroutines.flow.Flow
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class WallpaperRepository @Inject constructor(private val wallpaperApi: WallpaperApi) {
 
-    fun getWallpaper(): Flow<PagingData<PhotoResponse>> =
-        Pager(
+    fun getWallpaper(): Flow<PagingData<PhotoResponse>> {
+        return Pager(
             config = PagingConfig(
                 initialLoadSize = 15,
                 pageSize = 15,
@@ -24,5 +25,5 @@ class WallpaperRepository @Inject constructor(private val wallpaperApi: Wallpape
             ),
             pagingSourceFactory = { WallpaperPagingSource(wallpaperApi) }
         ).flow
-
+    }
 }
